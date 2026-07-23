@@ -68,7 +68,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
 
         {/* Footer robusto inspirado no layout de referência */}
-        <footer className="bg-[#09090B] border-t border-zinc-900 pt-16 pb-8 text-sm text-zinc-400">
+        <footer className="bg-[#000000] border-t border-zinc-900 pt-16 pb-8 text-sm text-zinc-400">
           <div className="mx-auto max-w-7xl px-4 grid gap-10 md:grid-cols-2 lg:grid-cols-3 mb-16">
             
             {/* Coluna 1 e 2: Marca e Sobre */}
