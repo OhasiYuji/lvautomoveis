@@ -88,7 +88,10 @@ export default function RootLayout({
               <p className="mt-2 max-w-sm text-zinc-400">
                 Compra e venda de veículos novos e seminovos com procedência garantida.
               </p>
-              <p className="text-zinc-500">Belo Horizonte - MG</p>
+              <p className="text-zinc-500">
+                Rua Benedito dos Santos, 315 - Barreiro, Belo Horizonte - MG, 30640-140
+              </p>
+              <p className="text-zinc-500">CNPJ 52.028.967/0001-85</p>
             </div>
 
             <div className="flex flex-col gap-4">
