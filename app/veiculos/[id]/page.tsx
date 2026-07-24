@@ -14,11 +14,11 @@ function SpecItem({
   value: string;
 }) {
   return (
-    <div className="flex items-center gap-2 border border-border bg-surface px-3 py-2">
-      <Icon className="size-4 shrink-0 text-brand-orange" />
+    <div className="border-border bg-surface flex items-center gap-2 rounded-md border px-3 py-2">
+      <Icon className="text-gold-2 size-4 shrink-0" />
       <div>
-        <p className="text-[11px] text-muted uppercase">{label}</p>
-        <p className="text-sm font-semibold text-foreground">{value}</p>
+        <p className="text-muted text-[11px] uppercase">{label}</p>
+        <p className="text-foreground text-sm font-semibold">{value}</p>
       </div>
     </div>
   );
@@ -41,7 +41,7 @@ export default async function VehicleDetailPage({
     <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8">
       <Link
         href="/"
-        className="inline-flex w-fit items-center gap-1 text-sm text-muted transition-colors hover:text-brand-orange"
+        className="text-muted inline-flex w-fit items-center gap-1 text-sm transition-colors hover:text-[var(--gold-2)]"
       >
         <ArrowLeft className="size-4" />
         Voltar ao estoque
@@ -49,12 +49,12 @@ export default async function VehicleDetailPage({
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div className="flex flex-col gap-3">
-          <div className="aspect-[4/3] w-full overflow-hidden rounded-sm border border-border bg-surface">
+          <div className="border-border bg-surface aspect-[4/3] w-full overflow-hidden rounded-lg border">
             {coverPhoto ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={coverPhoto.url} alt={label} className="h-full w-full object-cover" />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-muted">Sem foto</div>
+              <div className="text-muted flex h-full w-full items-center justify-center">Sem foto</div>
             )}
           </div>
           {otherPhotos.length > 0 && (
@@ -65,7 +65,7 @@ export default async function VehicleDetailPage({
                   key={photo.url}
                   src={photo.url}
                   alt={label}
-                  className="aspect-video w-full rounded-sm border border-border object-cover"
+                  className="border-border aspect-video w-full rounded-md border object-cover"
                 />
               ))}
             </div>
@@ -74,10 +74,10 @@ export default async function VehicleDetailPage({
 
         <div className="flex flex-col gap-5">
           <div>
-            <p className="text-sm font-semibold tracking-wide text-brand-orange uppercase">
+            <p className="text-gold-gradient text-sm font-semibold tracking-wide uppercase">
               {vehicle.brand}
             </p>
-            <h1 className="text-2xl font-bold text-foreground">{vehicle.model}</h1>
+            <h1 className="text-foreground text-2xl font-bold">{vehicle.model}</h1>
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -93,7 +93,7 @@ export default async function VehicleDetailPage({
             <SpecItem icon={BadgeCheck} label="Condição" value={formatCondition(vehicle.condition)} />
           </div>
 
-          <p className="border-y border-border py-4 text-4xl font-extrabold text-brand-orange">
+          <p className="border-border text-gold-gradient border-y py-4 text-4xl font-extrabold">
             {formatCurrency(vehicle.price)}
           </p>
 
@@ -101,7 +101,7 @@ export default async function VehicleDetailPage({
             href={whatsappLink(label)}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-14 w-full items-center justify-center gap-2 rounded-sm bg-[#25D366] px-5 text-lg font-bold text-white transition-opacity hover:opacity-90"
+            className="flex h-14 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] px-5 text-lg font-bold text-white transition-opacity hover:opacity-90"
           >
             <MessageCircle className="size-5" fill="currentColor" />
             Falar no WhatsApp
@@ -109,12 +109,12 @@ export default async function VehicleDetailPage({
 
           {vehicle.features.length > 0 && (
             <div>
-              <h2 className="mb-2 font-bold text-foreground">Opcionais</h2>
+              <h2 className="text-foreground mb-2 font-bold">Opcionais</h2>
               <div className="flex flex-wrap gap-2">
                 {vehicle.features.map((feature) => (
                   <span
                     key={feature}
-                    className="rounded-sm border border-border bg-surface px-3 py-1 text-sm text-foreground"
+                    className="border-border bg-surface text-foreground rounded-md border px-3 py-1 text-sm"
                   >
                     {feature}
                   </span>

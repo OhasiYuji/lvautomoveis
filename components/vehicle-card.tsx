@@ -7,9 +7,9 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleListItem }) {
   return (
     <Link
       href={`/veiculos/${vehicle.id}`}
-      className="group flex flex-col overflow-hidden rounded-sm border border-border bg-white transition-colors hover:border-brand-orange"
+      className="group border-border bg-surface hover:border-gold-2 flex flex-col overflow-hidden rounded-lg border transition-colors"
     >
-      <div className="aspect-[4/3] w-full overflow-hidden bg-surface">
+      <div className="bg-surface-2 aspect-[4/3] w-full overflow-hidden">
         {vehicle.cover_photo_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -18,15 +18,17 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleListItem }) {
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-muted">Sem foto</div>
+          <div className="text-muted flex h-full w-full items-center justify-center text-sm">
+            Sem foto
+          </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-2 border-t border-border p-4">
-        <h3 className="text-sm font-bold tracking-tight text-brand-black uppercase">
-          {vehicle.brand} <span className="text-brand-orange">{vehicle.model}</span>
+      <div className="border-border flex flex-1 flex-col gap-2 border-t p-4">
+        <h3 className="text-sm font-bold tracking-tight text-white uppercase">
+          {vehicle.brand} <span className="text-gold-gradient">{vehicle.model}</span>
         </h3>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+        <div className="text-muted flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <span className="inline-flex items-center gap-1">
             <Calendar className="size-3.5" />
             {vehicle.model_year ?? vehicle.manufacture_year ?? "—"}
@@ -56,9 +58,11 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleListItem }) {
           <span>{formatCondition(vehicle.condition)}</span>
         </div>
 
-        <p className="mt-1 text-2xl font-extrabold text-brand-orange">{formatCurrency(vehicle.price)}</p>
+        <p className="text-gold-gradient mt-1 text-2xl font-extrabold">
+          {formatCurrency(vehicle.price)}
+        </p>
 
-        <span className="mt-2 inline-flex w-full items-center justify-center rounded-sm bg-brand-orange py-2 text-sm font-bold tracking-wide text-white uppercase transition-colors group-hover:bg-brand-orange/90">
+        <span className="bg-gold-gradient mt-2 inline-flex w-full items-center justify-center rounded-md py-2 text-sm font-bold tracking-wide text-black uppercase transition-opacity group-hover:opacity-90">
           Ver mais
         </span>
       </div>
