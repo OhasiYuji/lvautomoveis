@@ -3,105 +3,90 @@ import { Storefront } from "@/components/storefront";
 import { whatsappGeneralLink } from "@/lib/format";
 import { ShieldCheck, Handshake, Wallet, Award } from "lucide-react";
 
+const HERO_PHOTO_URL =
+  "https://images.unsplash.com/photo-1580014317999-e9f1936787a5?fm=jpg&q=75&w=2000&auto=format&fit=crop&ixlib=rb-4.1.0";
+
+const STATS = [
+  { value: "15+", label: "Anos de mercado" },
+  { value: "3.200+", label: "Carros vendidos" },
+  { value: "4.8/5", label: "Avaliação dos clientes" },
+];
+
 export default async function HomePage() {
   const { items } = await listVehicles();
 
   return (
     <div className="flex w-full flex-col">
-      {/* HERO */}
-      <section className="relative overflow-hidden">
+      {/* HERO BANNER */}
+      <section className="relative isolate overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={HERO_PHOTO_URL}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-24 -right-24 h-[28rem] w-[28rem] rounded-full opacity-[0.12] blur-3xl"
-          style={{ background: "linear-gradient(135deg, var(--gold-1), var(--gold-2))" }}
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.94) 15%, rgba(0,0,0,0.75) 45%, rgba(0,0,0,0.35) 100%)",
+          }}
         />
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-4 py-12 md:py-20 lg:flex-row">
-          <div className="flex flex-1 flex-col gap-6">
-            <span className="text-gold-gradient text-sm font-bold tracking-wide uppercase">
-              Novos e seminovos com procedência
-            </span>
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 45%)" }}
+        />
 
-            <h1 className="text-5xl leading-[1.05] font-extrabold tracking-tight text-white lg:text-7xl">
-              O carro certo, no <br className="hidden lg:block" />
-              <span className="text-gold-gradient">preço certo.</span>
-            </h1>
+        <div className="relative mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center gap-6 px-4 py-24 sm:min-h-[640px]">
+          <span className="text-gold-gradient text-sm font-bold tracking-wide uppercase">
+            Novos e seminovos com procedência
+          </span>
 
-            <p className="max-w-md text-lg text-zinc-400">
-              15 anos vendendo carros revisados, com seu usado valendo como parte do pagamento.
-            </p>
+          <h1 className="max-w-2xl text-5xl leading-[1.05] font-extrabold tracking-tight text-white lg:text-7xl">
+            O carro certo, no <br className="hidden lg:block" />
+            <span className="text-gold-gradient">preço certo.</span>
+          </h1>
 
-            <div className="mt-2 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#estoque"
-                className="bg-gold-gradient flex items-center justify-center rounded-md px-8 py-4 font-bold text-black transition-opacity hover:opacity-90"
-              >
-                Ver estoque completo
-              </a>
-              <a
-                href={whatsappGeneralLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-border text-foreground flex items-center justify-center rounded-md border px-8 py-4 font-bold transition-colors hover:border-zinc-500"
-              >
-                Falar com vendedor
-              </a>
+          <p className="max-w-lg text-lg text-zinc-300">
+            15 anos vendendo carros revisados, com seu usado valendo como parte do pagamento.
+          </p>
+
+          <div className="mt-2 flex flex-col gap-4 sm:flex-row">
+            <a
+              href="#estoque"
+              className="bg-gold-gradient flex items-center justify-center rounded-md px-8 py-4 font-bold text-black transition-opacity hover:opacity-90"
+            >
+              Ver estoque completo
+            </a>
+            <a
+              href={whatsappGeneralLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center rounded-md bg-white px-8 py-4 font-bold text-black transition-opacity hover:opacity-90"
+            >
+              Falar com vendedor
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FAIXA DE ESTATÍSTICAS — cartão branco flutuando sobre o banner */}
+      <div className="relative z-10 mx-auto -mt-14 w-full max-w-5xl px-4 sm:-mt-16">
+        <div className="grid grid-cols-1 divide-y divide-zinc-200 rounded-2xl bg-white shadow-2xl shadow-black/60 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {STATS.map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center gap-1 px-6 py-6 text-center">
+              <span className="text-gold-gradient text-3xl font-black sm:text-4xl">{stat.value}</span>
+              <span className="text-sm font-medium text-zinc-600">{stat.label}</span>
             </div>
-          </div>
-
-          <div className="border-border bg-surface w-full max-w-md rounded-xl border p-8 shadow-2xl shadow-black/40 lg:ml-auto">
-            <h3 className="mb-5 text-lg font-bold text-white">Busca rápida</h3>
-
-            <form className="flex flex-col gap-4">
-              <input
-                type="text"
-                placeholder="Buscar por marca ou modelo"
-                className="border-border placeholder:text-zinc-500 w-full rounded-md border bg-black/40 p-3.5 text-white outline-none focus:border-[var(--gold-2)]"
-              />
-
-              <div className="flex gap-4">
-                <input
-                  type="text"
-                  placeholder="2015+"
-                  className="border-border placeholder:text-zinc-500 w-1/2 rounded-md border bg-black/40 p-3.5 text-white outline-none focus:border-[var(--gold-2)]"
-                />
-                <input
-                  type="text"
-                  placeholder="R$ 160.000"
-                  className="border-border placeholder:text-zinc-500 w-1/2 rounded-md border bg-black/40 p-3.5 text-white outline-none focus:border-[var(--gold-2)]"
-                />
-              </div>
-
-              <a
-                href="#estoque"
-                className="bg-gold-gradient mt-2 flex w-full items-center justify-center rounded-md py-4 font-bold text-black transition-opacity hover:opacity-90"
-              >
-                Buscar no estoque
-              </a>
-            </form>
-          </div>
+          ))}
         </div>
-      </section>
-
-      {/* FAIXA DE ESTATÍSTICAS */}
-      <section className="border-border border-y py-12">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-around gap-10 px-4 text-center sm:flex-row">
-          <div>
-            <h4 className="text-gold-gradient text-4xl font-black sm:text-5xl">15+</h4>
-            <p className="mt-2 text-sm font-medium text-zinc-400">Anos de mercado</p>
-          </div>
-          <div>
-            <h4 className="text-gold-gradient text-4xl font-black sm:text-5xl">3.200+</h4>
-            <p className="mt-2 text-sm font-medium text-zinc-400">Carros vendidos</p>
-          </div>
-          <div>
-            <h4 className="text-gold-gradient text-4xl font-black sm:text-5xl">4.8/5</h4>
-            <p className="mt-2 text-sm font-medium text-zinc-400">Avaliação dos clientes</p>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* ESTOQUE + BUSCA POR MARCA (dentro do Storefront) */}
-      <section id="estoque" className="bg-background py-20">
+      <section id="estoque" className="bg-background pt-16 pb-20">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-10 flex items-end justify-between">
             <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
