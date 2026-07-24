@@ -84,12 +84,12 @@ export default async function VehicleDetailPage({
             <SpecItem
               icon={Calendar}
               label="Ano"
-              value={`${vehicle.manufacture_year ?? "—"}/${vehicle.model_year ?? "—"}`}
+              value={`${vehicle.manufacture_year ?? "-"}/${vehicle.model_year ?? "-"}`}
             />
             <SpecItem icon={Gauge} label="Km" value={formatKm(vehicle.km)} />
-            <SpecItem icon={Palette} label="Cor" value={vehicle.color ?? "—"} />
-            <SpecItem icon={Fuel} label="Combustível" value={vehicle.fuel_type ?? "—"} />
-            <SpecItem icon={Cog} label="Câmbio" value={vehicle.transmission_type ?? "—"} />
+            <SpecItem icon={Palette} label="Cor" value={vehicle.color ?? "-"} />
+            <SpecItem icon={Fuel} label="Combustível" value={vehicle.fuel_type ?? "-"} />
+            <SpecItem icon={Cog} label="Câmbio" value={vehicle.transmission_type ?? "-"} />
             <SpecItem icon={BadgeCheck} label="Condição" value={formatCondition(vehicle.condition)} />
           </div>
 

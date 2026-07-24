@@ -40,7 +40,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased scroll-smooth`}
     >
       <body className="bg-background text-foreground flex min-h-full flex-col">
-        <header className="border-border bg-background/95 sticky top-0 z-40 border-b backdrop-blur">
+        <header className="border-border bg-black sticky top-0 z-40 border-b">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:py-4">
             <Link href="/" className="flex h-12 w-32 items-center sm:h-14 sm:w-40">
               <Logo />

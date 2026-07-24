@@ -83,7 +83,7 @@ export default async function HomePage() {
       </section>
 
       {/* FAIXA DE ESTATÍSTICAS */}
-      <section className="bg-surface border-border border-y py-12">
+      <section className="border-border border-y py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-around gap-10 px-4 text-center sm:flex-row">
           <div>
             <h4 className="text-gold-gradient text-4xl font-black sm:text-5xl">15+</h4>
@@ -114,7 +114,7 @@ export default async function HomePage() {
       </section>
 
       {/* INSTITUCIONAL */}
-      <section id="institucional" className="bg-surface border-border border-t py-20">
+      <section id="institucional" className="border-border border-t py-20">
         <div className="mx-auto max-w-7xl px-4">
           <div className="mx-auto max-w-2xl text-center">
             <span className="text-gold-gradient text-sm font-bold tracking-wide uppercase">
@@ -125,7 +125,7 @@ export default async function HomePage() {
             </h2>
             <p className="mt-4 text-zinc-400">
               Há 15 anos ajudando famílias mineiras a comprar, vender e trocar veículos com
-              segurança — todo carro revisado antes de ir pro pátio, e seu usado sempre vale
+              segurança. Todo carro é revisado antes de ir pro pátio, e seu usado sempre vale
               como parte do pagamento.
             </p>
           </div>
@@ -155,7 +155,7 @@ export default async function HomePage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="border-border bg-background rounded-xl border p-6 text-center"
+                className="border-border bg-surface rounded-xl border p-6 text-center"
               >
                 <span className="bg-gold-gradient mx-auto flex size-12 items-center justify-center rounded-full">
                   <item.icon className="size-6 text-black" />

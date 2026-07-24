@@ -31,7 +31,7 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleListItem }) {
         <div className="text-muted flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <span className="inline-flex items-center gap-1">
             <Calendar className="size-3.5" />
-            {vehicle.model_year ?? vehicle.manufacture_year ?? "—"}
+            {vehicle.model_year ?? vehicle.manufacture_year ?? "-"}
           </span>
           <span className="inline-flex items-center gap-1">
             <Gauge className="size-3.5" />

@@ -1,4 +1,4 @@
-// Gerado a partir do pacote simple-icons (CC0) — usado para identificar a marca do veículo.
+// Gerado a partir do pacote simple-icons (CC0), usado para identificar a marca do veículo.
 export interface BrandIconDef {
   slug: string;
   label: string;
