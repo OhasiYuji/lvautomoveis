@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Gauge, Palette, Fuel, Cog, BadgeCheck, MessageCircle } from "lucide-react";
 import { getVehicle } from "@/lib/api";
 import { formatCurrency, formatKm, formatCondition, whatsappLink } from "@/lib/format";
+import { VehicleGallery } from "@/components/vehicle-gallery";
 
 function SpecItem({
   icon: Icon,
@@ -34,8 +35,7 @@ export default async function VehicleDetailPage({
   if (!vehicle) notFound();
 
   const label = `${vehicle.brand} ${vehicle.model}`;
-  const coverPhoto = vehicle.photos.find((p) => p.is_cover) ?? vehicle.photos[0];
-  const otherPhotos = vehicle.photos.filter((p) => p !== coverPhoto);
+  const orderedPhotos = [...vehicle.photos].sort((a, b) => Number(b.is_cover) - Number(a.is_cover));
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8">
@@ -47,32 +47,10 @@ export default async function VehicleDetailPage({
         Voltar ao estoque
       </Link>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="flex flex-col gap-3">
-          <div className="border-border bg-surface aspect-[4/3] w-full overflow-hidden rounded-lg border">
-            {coverPhoto ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={coverPhoto.url} alt={label} className="h-full w-full object-cover" />
-            ) : (
-              <div className="text-muted flex h-full w-full items-center justify-center">Sem foto</div>
-            )}
-          </div>
-          {otherPhotos.length > 0 && (
-            <div className="grid grid-cols-4 gap-2">
-              {otherPhotos.map((photo) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={photo.url}
-                  src={photo.url}
-                  alt={label}
-                  className="border-border aspect-video w-full rounded-md border object-cover"
-                />
-              ))}
-            </div>
-          )}
-        </div>
+      <VehicleGallery photos={orderedPhotos} label={label} />
 
-        <div className="flex flex-col gap-5">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="flex flex-col gap-5 lg:col-span-2">
           <div>
             <p className="text-gold-gradient text-sm font-semibold tracking-wide uppercase">
               {vehicle.brand}
@@ -93,20 +71,6 @@ export default async function VehicleDetailPage({
             <SpecItem icon={BadgeCheck} label="Condição" value={formatCondition(vehicle.condition)} />
           </div>
 
-          <p className="border-border text-gold-gradient border-y py-4 text-4xl font-extrabold">
-            {formatCurrency(vehicle.price)}
-          </p>
-
-          <a
-            href={whatsappLink(label)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex h-14 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] px-5 text-lg font-bold text-white transition-opacity hover:opacity-90"
-          >
-            <MessageCircle className="size-5" fill="currentColor" />
-            Falar no WhatsApp
-          </a>
-
           {vehicle.features.length > 0 && (
             <div>
               <h2 className="text-foreground mb-2 font-bold">Opcionais</h2>
@@ -122,6 +86,31 @@ export default async function VehicleDetailPage({
               </div>
             </div>
           )}
+        </div>
+
+        <div className="lg:col-span-1">
+          <div className="border-border bg-surface sticky top-20 flex flex-col gap-4 rounded-lg border p-5">
+            <div>
+              <p className="text-muted text-xs uppercase">Valor</p>
+              <p className="text-gold-gradient text-4xl font-extrabold">
+                {formatCurrency(vehicle.price)}
+              </p>
+            </div>
+
+            <a
+              href={whatsappLink(label)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-14 w-full items-center justify-center gap-2 rounded-md bg-[#25D366] px-5 text-lg font-bold text-white transition-opacity hover:opacity-90"
+            >
+              <MessageCircle className="size-5" fill="currentColor" />
+              Falar no WhatsApp
+            </a>
+
+            <p className="text-muted text-center text-xs">
+              Envie uma mensagem e negocie direto com um vendedor.
+            </p>
+          </div>
         </div>
       </div>
     </div>
