@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import type { VehiclePhoto } from "@/lib/api";
 
@@ -23,11 +24,13 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
   return (
     <div className="flex flex-col gap-3">
       <div className="group border-border bg-surface relative aspect-[16/10] w-full overflow-hidden rounded-lg border">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={photos[index].url}
           alt={`${label} — foto ${index + 1}`}
-          className="h-full w-full object-cover"
+          fill
+          priority={index === 0}
+          sizes="(max-width: 1024px) 100vw, 800px"
+          className="object-cover"
         />
 
         <button
@@ -71,12 +74,11 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
               key={photo.url}
               type="button"
               onClick={() => setIndex(i)}
-              className={`aspect-video overflow-hidden rounded-md border-2 transition-colors ${
+              className={`relative aspect-video overflow-hidden rounded-md border-2 transition-colors ${
                 i === index ? "border-[var(--gold-2)]" : "border-border hover:border-[var(--gold-2)]/50"
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.url} alt="" className="h-full w-full object-cover" />
+              <Image src={photo.url} alt="" fill loading="lazy" sizes="150px" className="object-cover" />
             </button>
           ))}
         </div>
@@ -112,12 +114,15 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
               </button>
             </>
           )}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photos[index].url}
-            alt={`${label} — foto ${index + 1}`}
-            className="max-h-[90vh] max-w-full object-contain"
-          />
+          <div className="relative h-[90vh] w-full max-w-4xl">
+            <Image
+              src={photos[index].url}
+              alt={`${label} — foto ${index + 1}`}
+              fill
+              sizes="100vw"
+              className="object-contain"
+            />
+          </div>
         </div>
       )}
     </div>

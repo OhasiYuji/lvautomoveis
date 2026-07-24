@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Gauge, Calendar, Palette, Fuel, Cog } from "lucide-react";
 import type { VehicleListItem } from "@/lib/api";
 import { formatCurrency, formatKm, formatCondition } from "@/lib/format";
@@ -9,13 +10,15 @@ export function VehicleCard({ vehicle }: { vehicle: VehicleListItem }) {
       href={`/veiculos/${vehicle.id}`}
       className="group border-border bg-surface hover:border-gold-2 flex flex-col overflow-hidden rounded-lg border transition-colors"
     >
-      <div className="bg-surface-2 aspect-[4/3] w-full overflow-hidden">
+      <div className="bg-surface-2 relative aspect-[4/3] w-full overflow-hidden">
         {vehicle.cover_photo_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={vehicle.cover_photo_url}
             alt={`${vehicle.brand} ${vehicle.model}`}
-            className="h-full w-full object-cover"
+            fill
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
           />
         ) : (
           <div className="text-muted flex h-full w-full items-center justify-center text-sm">
