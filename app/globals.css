@@ -64,4 +64,11 @@ body {
   .border-gold-gradient {
     border-image: linear-gradient(120deg, var(--gold-3), var(--gold-1), var(--gold-4)) 1;
   }
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -47,49 +47,13 @@ export default async function VehicleDetailPage({
         Voltar ao estoque
       </Link>
 
-      <VehicleGallery photos={orderedPhotos} label={label} />
-
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        <div className="flex flex-col gap-5 lg:col-span-2">
-          <div>
-            <p className="text-gold-gradient text-sm font-semibold tracking-wide uppercase">
-              {vehicle.brand}
-            </p>
-            <h1 className="text-foreground text-2xl font-bold">{vehicle.model}</h1>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            <SpecItem
-              icon={Calendar}
-              label="Ano"
-              value={`${vehicle.manufacture_year ?? "-"}/${vehicle.model_year ?? "-"}`}
-            />
-            <SpecItem icon={Gauge} label="Km" value={formatKm(vehicle.km)} />
-            <SpecItem icon={Palette} label="Cor" value={vehicle.color ?? "-"} />
-            <SpecItem icon={Fuel} label="Combustível" value={vehicle.fuel_type ?? "-"} />
-            <SpecItem icon={Cog} label="Câmbio" value={vehicle.transmission_type ?? "-"} />
-            <SpecItem icon={BadgeCheck} label="Condição" value={formatCondition(vehicle.condition)} />
-          </div>
-
-          {vehicle.features.length > 0 && (
-            <div>
-              <h2 className="text-foreground mb-2 font-bold">Opcionais</h2>
-              <div className="flex flex-wrap gap-2">
-                {vehicle.features.map((feature) => (
-                  <span
-                    key={feature}
-                    className="border-border bg-surface text-foreground rounded-md border px-3 py-1 text-sm"
-                  >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <VehicleGallery photos={orderedPhotos} label={label} />
         </div>
 
         <div className="lg:col-span-1">
-          <div className="border-border bg-surface sticky top-20 flex flex-col gap-4 rounded-lg border p-5">
+          <div className="border-border bg-surface flex h-full flex-col justify-center gap-4 rounded-lg border p-5">
             <div>
               <p className="text-muted text-xs uppercase">Valor</p>
               <p className="text-gold-gradient text-4xl font-extrabold">
@@ -112,6 +76,44 @@ export default async function VehicleDetailPage({
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <div>
+          <p className="text-gold-gradient text-sm font-semibold tracking-wide uppercase">
+            {vehicle.brand}
+          </p>
+          <h1 className="text-foreground text-2xl font-bold">{vehicle.model}</h1>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+          <SpecItem
+            icon={Calendar}
+            label="Ano"
+            value={`${vehicle.manufacture_year ?? "-"}/${vehicle.model_year ?? "-"}`}
+          />
+          <SpecItem icon={Gauge} label="Km" value={formatKm(vehicle.km)} />
+          <SpecItem icon={Palette} label="Cor" value={vehicle.color ?? "-"} />
+          <SpecItem icon={Fuel} label="Combustível" value={vehicle.fuel_type ?? "-"} />
+          <SpecItem icon={Cog} label="Câmbio" value={vehicle.transmission_type ?? "-"} />
+          <SpecItem icon={BadgeCheck} label="Condição" value={formatCondition(vehicle.condition)} />
+        </div>
+
+        {vehicle.features.length > 0 && (
+          <div>
+            <h2 className="text-foreground mb-2 font-bold">Opcionais</h2>
+            <div className="flex flex-wrap gap-2">
+              {vehicle.features.map((feature) => (
+                <span
+                  key={feature}
+                  className="border-border bg-surface text-foreground rounded-md border px-3 py-1 text-sm"
+                >
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

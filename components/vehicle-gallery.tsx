@@ -1,94 +1,88 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { VehiclePhoto } from "@/lib/api";
 
 export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; label: string }) {
-  const [index, setIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   if (photos.length === 0) {
     return (
-      <div className="border-border bg-surface flex aspect-[16/10] w-full items-center justify-center rounded-lg border">
+      <div className="border-border bg-surface flex aspect-[21/9] w-full items-center justify-center rounded-lg border">
         <p className="text-muted text-sm">Sem foto</p>
       </div>
     );
   }
 
-  function go(delta: number) {
-    setIndex((prev) => (prev + delta + photos.length) % photos.length);
+  function scrollByOne(direction: 1 | -1) {
+    const track = trackRef.current;
+    if (!track) return;
+    const slideWidth = track.firstElementChild?.clientWidth ?? track.clientWidth / 3;
+    track.scrollBy({ left: direction * (slideWidth + 8), behavior: "smooth" });
+  }
+
+  function goLightbox(delta: number) {
+    setLightboxIndex((prev) => {
+      if (prev === null) return prev;
+      return (prev + delta + photos.length) % photos.length;
+    });
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="group border-border bg-surface relative aspect-[16/10] w-full overflow-hidden rounded-lg border">
-        <Image
-          src={photos[index].url}
-          alt={`${label} — foto ${index + 1}`}
-          fill
-          priority={index === 0}
-          sizes="(max-width: 1024px) 100vw, 800px"
-          className="object-cover"
-        />
-
-        <button
-          type="button"
-          onClick={() => setLightboxOpen(true)}
-          className="absolute top-3 right-3 rounded-full bg-black/50 p-2 text-white opacity-0 transition-opacity group-hover:opacity-100"
-          title="Ampliar"
-        >
-          <ZoomIn className="size-4" />
-        </button>
-
-        {photos.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={() => go(-1)}
-              className="absolute top-1/2 left-3 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
-              title="Foto anterior"
-            >
-              <ChevronLeft className="size-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => go(1)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
-              title="Próxima foto"
-            >
-              <ChevronRight className="size-5" />
-            </button>
-            <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white">
-              {index + 1} / {photos.length}
-            </span>
-          </>
-        )}
+    <div className="relative">
+      <div
+        ref={trackRef}
+        className="scrollbar-none flex snap-x snap-mandatory gap-2 overflow-x-auto scroll-smooth"
+      >
+        {photos.map((photo, i) => (
+          <button
+            key={photo.url}
+            type="button"
+            onClick={() => setLightboxIndex(i)}
+            className="border-border bg-surface relative aspect-[4/3] w-[calc(100%-1rem)] shrink-0 snap-start overflow-hidden rounded-lg border sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.6rem)]"
+          >
+            <Image
+              src={photo.url}
+              alt={`${label} — foto ${i + 1}`}
+              fill
+              priority={i < 3}
+              loading={i < 3 ? undefined : "lazy"}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover"
+            />
+          </button>
+        ))}
       </div>
 
       {photos.length > 1 && (
-        <div className="grid grid-cols-5 gap-2 sm:grid-cols-6">
-          {photos.map((photo, i) => (
-            <button
-              key={photo.url}
-              type="button"
-              onClick={() => setIndex(i)}
-              className={`relative aspect-video overflow-hidden rounded-md border-2 transition-colors ${
-                i === index ? "border-[var(--gold-2)]" : "border-border hover:border-[var(--gold-2)]/50"
-              }`}
-            >
-              <Image src={photo.url} alt="" fill loading="lazy" sizes="150px" className="object-cover" />
-            </button>
-          ))}
-        </div>
+        <>
+          <button
+            type="button"
+            onClick={() => scrollByOne(-1)}
+            className="absolute top-1/2 left-2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white transition-colors hover:bg-black/80"
+            title="Anterior"
+          >
+            <ChevronLeft className="size-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByOne(1)}
+            className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full bg-black/60 p-2 text-white transition-colors hover:bg-black/80"
+            title="Próxima"
+          >
+            <ChevronRight className="size-5" />
+          </button>
+        </>
       )}
 
-      {lightboxOpen && (
+      {lightboxIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4">
           <button
             type="button"
-            onClick={() => setLightboxOpen(false)}
+            onClick={() => setLightboxIndex(null)}
             className="absolute top-4 right-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
             title="Fechar"
           >
@@ -98,7 +92,7 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
             <>
               <button
                 type="button"
-                onClick={() => go(-1)}
+                onClick={() => goLightbox(-1)}
                 className="absolute left-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
                 title="Anterior"
               >
@@ -106,7 +100,7 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
               </button>
               <button
                 type="button"
-                onClick={() => go(1)}
+                onClick={() => goLightbox(1)}
                 className="absolute right-4 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
                 title="Próxima"
               >
@@ -116,13 +110,16 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
           )}
           <div className="relative h-[90vh] w-full max-w-4xl">
             <Image
-              src={photos[index].url}
-              alt={`${label} — foto ${index + 1}`}
+              src={photos[lightboxIndex].url}
+              alt={`${label} — foto ${lightboxIndex + 1}`}
               fill
               sizes="100vw"
               className="object-contain"
             />
           </div>
+          <span className="absolute bottom-4 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white">
+            {lightboxIndex + 1} / {photos.length}
+          </span>
         </div>
       )}
     </div>
