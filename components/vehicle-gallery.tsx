@@ -42,7 +42,7 @@ export function VehicleGallery({ photos, label }: { photos: VehiclePhoto[]; labe
             key={photo.url}
             type="button"
             onClick={() => setLightboxIndex(i)}
-            className="border-border bg-surface relative aspect-[4/3] w-[calc(100%-1rem)] shrink-0 snap-start overflow-hidden rounded-lg border sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.6rem)]"
+            className="border-border bg-surface relative aspect-[4/3] w-[calc(100%-1rem)] shrink-0 snap-start overflow-hidden rounded-lg border sm:w-[calc(70%-0.5rem)] lg:w-[calc(60%-0.6rem)]"
           >
             <Image
               src={photo.url}
